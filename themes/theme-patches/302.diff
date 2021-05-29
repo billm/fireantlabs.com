@@ -1,0 +1,271 @@
+diff --git a/README.md b/README.md
+index 62e3115c..f01d84ba 100644
+--- a/README.md
++++ b/README.md
+@@ -10,27 +10,29 @@ This theme was highly inspired by the [hello-friend](https://github.com/panr/hug
+ 
+ ## Table of Contents
+ 
+-- [Features](#features)
+-- [How to start](#how-to-start)
+-- [How to configure](#how-to-configure)
+-- [More](#more-things)
+-  - [Built in shortcodes](#built-in-shortcodes)
+-    - [image](#image)
+-  - [Code highlighting](#code-highlighting)
+-  - [Favicon](#favicon)
+-  - [Audio Support](#audio-support)
+-- [Social Icons](#social-icons)
+-- [Known issues](#known-issues)
+-- [How to edit the theme](#how-to-edit-the-theme)
+-- [Changelog](CHANGELOG.md)
+-- [Sponsoring](#sponsoring)
+-- [Licence](#licence)
++- [Hello Friend NG](#hello-friend-ng)
++  - [General informations](#general-informations)
++  - [Table of Contents](#table-of-contents)
++  - [Features](#features)
++  - [How to start](#how-to-start)
++  - [How to configure](#how-to-configure)
++  - [More things](#more-things)
++    - [Built-in shortcodes](#built-in-shortcodes)
++      - [image](#image)
++    - [Code highlighting](#code-highlighting)
++    - [Favicon](#favicon)
++    - [Audio Support](#audio-support)
++  - [Social Icons](#social-icons)
++  - [Known issues](#known-issues)
++  - [How to edit the theme](#how-to-edit-the-theme)
++  - [Sponsoring](#sponsoring)
++  - [License](#license)
+ 
+ ---
+ 
+ ## Features
+ 
+-- Theming: **dark/light mode**, depending on your system preferences or the users choice
++- Theming: **dark/light mode**, set by the site, operating system, or the users choice with optional theme toggle.
+ - Great reading experience thanks to [**Inter UI font**](https://rsms.me/inter/), made by [Rasmus Andersson](https://rsms.me/about/)
+ - Nice code highlighting thanks to [**PrismJS**](https://prismjs.com)
+ - An easy way to modify the theme with Hugo tooling
+@@ -162,7 +164,7 @@ In your article add to your front matters part:
+ audio: path/to/file.mp3
+ ```
+ 
+-## Social Icons:
++## Social Icons
+ 
+ A large variety of social icons are available and can be configured like this:
+ 
+@@ -172,7 +174,7 @@ A large variety of social icons are available and can be configured like this:
+   url = "<profile_URL>"
+ ```
+ 
+-Take a look into this [list](docs/svgs.md) of available icon options. 
++Take a look into this [list](docs/svgs.md) of available icon options.
+ 
+ If you need another one, just open an issue or create a pull request with your wished icon. :)
+ 
+@@ -198,7 +200,7 @@ Just edit it. You don't need any node stuff. ;)
+ If you like my work and if you think this project is worth to support it, just <br />
+ <a href="https://www.buymeacoffee.com/djordjeatlialp" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-green.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
+ 
+-## Licence
++## License
+ 
+ Copyright © 2019-2021 Djordje Atlialp
+ 
+diff --git a/assets/js/main.js b/assets/js/main.js
+index dc302a18..aa6afa95 100644
+--- a/assets/js/main.js
++++ b/assets/js/main.js
+@@ -1,51 +1,20 @@
+-/**
+- * Theming.
+- *
+- * Supports the preferred color scheme of the operation system as well as
+- * the theme choice of the user.
+- *
+- */
++// Theme Toggle
+ const themeToggle = document.querySelector(".theme-toggle");
+-const chosenTheme = window.localStorage && window.localStorage.getItem("theme");
+-const chosenThemeIsDark = chosenTheme == "dark";
+-const chosenThemeIsLight = chosenTheme == "light";
+ 
+-// Detect the color scheme the operating system prefers.
+-function detectOSColorTheme() {
+-  if (chosenThemeIsDark) {
+-    document.documentElement.setAttribute("data-theme", "dark");
+-  } else if (chosenThemeIsLight) {
+-    document.documentElement.setAttribute("data-theme", "light");
+-  } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+-    document.documentElement.setAttribute("data-theme", "dark");
+-  } else {
+-    document.documentElement.setAttribute("data-theme", "light");
+-  }
++if (themeToggle) {
++  themeToggle.addEventListener("click", switchTheme, false);
++} else {
++  localStorage.removeItem("theme");
+ }
+ 
+-// Switch the theme.
++// Switch the theme
+ function switchTheme(e) {
+-  if (chosenThemeIsDark) {
++  const currentTheme = document.documentElement.getAttribute("data-theme");
++  if (currentTheme == "dark") {
+     localStorage.setItem("theme", "light");
++    document.documentElement.setAttribute("data-theme", "light")
+   } else {
+     localStorage.setItem("theme", "dark");
++    document.documentElement.setAttribute("data-theme", "dark")
+   }
+-
+-  detectOSColorTheme();
+-  window.location.reload();
+-}
+-
+-// Event listener
+-if (themeToggle) {
+-  themeToggle.addEventListener("click", switchTheme, false);
+-  window
+-    .matchMedia("(prefers-color-scheme: dark)")
+-    .addEventListener("change", (e) => e.matches && detectOSColorTheme());
+-  window
+-    .matchMedia("(prefers-color-scheme: light)")
+-    .addEventListener("change", (e) => e.matches && detectOSColorTheme());
+-
+-  detectOSColorTheme();
+-} else {
+-  localStorage.removeItem("theme");
+ }
+diff --git a/assets/js/theme.js b/assets/js/theme.js
+new file mode 100644
+index 00000000..3cfea650
+--- /dev/null
++++ b/assets/js/theme.js
+@@ -0,0 +1,24 @@
++/**
++ * Theming.
++ *
++ * Supports a tier of user choice, site choice, operating system.
++ *
++ */
++
++// Detect the color scheme the operating system prefers
++function detectOSColorTheme() {
++  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
++    return "dark";
++  } else {
++    return "light";
++  }
++}
++
++// Set the initial theme based on the order of preference
++(() => {
++  const chosenTheme = window.localStorage && window.localStorage.getItem("theme");
++  const defaultTheme = document.documentElement.getAttribute("data-theme");
++  const osTheme = detectOSColorTheme();
++  const currentTheme = chosenTheme || defaultTheme || osTheme
++  document.documentElement.setAttribute("data-theme", currentTheme)
++})();
+diff --git a/exampleSite/config.toml b/exampleSite/config.toml
+index 23bc26c4..96d50fe8 100644
+--- a/exampleSite/config.toml
++++ b/exampleSite/config.toml
+@@ -54,7 +54,7 @@ disableHugoGeneratorInject = false
+   dateformNumTime = "2006-01-02 15:04"
+ 
+   # Metadata mostly used in document's head
+-  # 
++  #
+   description = "Nice theme for homepages and blogs"
+   keywords = ""
+   images = [""]
+@@ -75,13 +75,22 @@ disableHugoGeneratorInject = false
+   disableReadOtherPosts = false
+ 
+   # Enable theme toggle
+-  # 
+-  # This options enables the theme toggle for the theme. 
+-  # Per default, this option is off. 
+-  # The theme is respecting the prefers-color-scheme of the operating systeme. 
+-  # With this option on, the page user is able to set the scheme he wants. 
++  #
++  # This options enables the theme toggle for the theme.
++  # Per default, this option is off.
++  # The theme is respecting the prefers-color-scheme of the operating systeme.
++  # With this option on, the page user is able to set the scheme he wants.
+   enableThemeToggle = false
+ 
++  # Set a default theme
++  #
++  # This option allows you to set a default theme (light or dark) for the website.
++  # If this is not set, the browser will pick a theme based on OS settings
++  # If this is set to "dark" or "light", the site will be in that theme unless
++  # enableThemeToggle is on, and the user has changed the theme.
++  #
++  # defaultTheme = "dark"
++
+   # Sharing buttons
+   #
+   # There are a lot of buttons preconfigured. If you want to change them,
+@@ -100,8 +109,8 @@ disableHugoGeneratorInject = false
+   #
+   justifyContent = false  # Set "text-align: justify" to .post-content.
+ 
+-  # Custom footer 
+-  # If you want, you can easily override the default footer with your own content. 
++  # Custom footer
++  # If you want, you can easily override the default footer with your own content.
+   #
+   [params.footer]
+     trademark = true
+@@ -131,11 +140,11 @@ disableHugoGeneratorInject = false
+     # Set to a valid CSS time value to change the animation duration, "0s" to disable.
+     # logoCursorAnimate  = "2s"
+ 
+-  # Commento is more than just a comments widget you can embed — 
+-  # it’s a return to the roots of the internet. 
+-  # An internet without the tracking and invasions of privacy. 
+-  # An internet that is simple and lightweight. 
+-  # An internet that is focused on interesting discussions, not ads. 
++  # Commento is more than just a comments widget you can embed —
++  # it’s a return to the roots of the internet.
++  # An internet without the tracking and invasions of privacy.
++  # An internet that is simple and lightweight.
++  # An internet that is focused on interesting discussions, not ads.
+   # A better internet.
+   # Uncomment this to enable Commento.
+   #
+diff --git a/layouts/_default/baseof.html b/layouts/_default/baseof.html
+index 2c80de9d..f75a1236 100644
+--- a/layouts/_default/baseof.html
++++ b/layouts/_default/baseof.html
+@@ -1,13 +1,14 @@
+ <!DOCTYPE html>
+-<html lang="{{ .Site.Language }}">
++<html lang="{{ .Site.Language }}" data-theme="{{ with .Site.Params.defaultTheme }}{{ . }}{{ end }}">
+     <head>
+         {{ partial "head.html" . }}
++        {{ partial "head.javascript.html" . }}
+     </head>
+ 
+     {{ block "body" . }}
+         <body>
+     {{ end }}
+-    
++
+         <div class="container">
+             {{ partial "header.html" . }}
+ 
+diff --git a/layouts/partials/head.javascript.html b/layouts/partials/head.javascript.html
+new file mode 100644
+index 00000000..f68db4eb
+--- /dev/null
++++ b/layouts/partials/head.javascript.html
+@@ -0,0 +1,2 @@
++{{ $theme := resources.Get "js/theme.js" | resources.Minify | resources.Fingerprint "sha512" }}
++<script type="text/javascript" src="{{ $theme.RelPermalink }}" integrity="{{ $theme.Data.Integrity }}"></script>
