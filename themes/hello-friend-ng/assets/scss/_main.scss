@@ -8,7 +8,7 @@ html {
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  //box-sizing: inherit;
 }
 
 body {
@@ -328,7 +328,8 @@ ol ol {
 }
 
 .content {
-  display: flex;
+  // This pads the home page oddly, removed for now
+  //display: flex;
   flex-direction: column;
   flex: 1 auto;
   align-items: center;

@@ -1,0 +1,43 @@
+{{ define "body" }}
+    <body class="{{ if .Site.Params.backgroundImage }} background-image" style="background-image: url('{{ .Site.Params.backgroundImage }}');" {{ else }}"{{ end }}>
+{{ end }}
+
+{{ define "main" }}
+    <main aria-role="main">
+        <div>
+            {{ if .Site.Params.Portrait.Path }}
+               <img src="{{ .Site.Params.Portrait.Path }}" class="circle" alt="{{ .Site.Params.Portrait.Alt }}" style="max-width:{{ .Site.Params.Portrait.MaxWidth }}" />
+            {{ end }}
+
+            <h1>{{ .Site.Title }}</h1>
+            {{- with .Site.Params.homeSubtitle }}
+                <p>{{.}}</p>
+            {{- end }}
+
+        </div>
+        <div class="posts">
+          {{ $paginator := .Paginate .Data.Pages }}
+          
+          {{ range $paginator.Pages }}
+          <ul class="posts-list">
+              {{ range .Pages }}
+              <li class="post-item">
+                  <a href="{{.Permalink}}">
+                      <span class="post-title"><h2>{{.Title}}</h2></span>
+                      <span class="post-day">{{ if .Site.Params.dateform }}{{ .Date.Format .Site.Params.dateform }}{{ else }}{{ .Date.Format "Jan 02 2000"}}{{ end }}</span>
+                  </a>
+              </li>
+              <div class="post">
+                  <div class="post-content">{{ .Summary }}</div>
+              </div>
+              <div>
+                  <a class="read-more button"
+                      href="{{.RelPermalink}}">{{ $.Site.Params.ReadMore }} →</a>
+              </div>
+              {{- end }}
+          </ul>
+          {{- end }}
+          {{ template "_internal/pagination.html" . }}
+      </div>
+  </main>
+{{ end }}

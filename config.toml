@@ -38,10 +38,13 @@ paginate     = 10
     keywords = "security pentest pentesting redteam exploit development shellcode"
     copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
     readOtherPosts = "Read other posts"
+    readMore = "Continue reading"
 
     [languages.en.params.logo]
-      logoText = "FireAnt Labs"
+      logoText = "cd ~"
       logoHomeLink = "/"
+      logoMark = "fireantlabs$"
+      logoCursorColor = "grey"
     # or
     #
     # path = "/img/your-example-logo.svg"
