@@ -23,7 +23,7 @@ command shell. We'd like to run some tools in Powershell, but after checking
 the LanguageMode, we can see that we're in ConstrainedLanguage mode. Since
 this blocks the tools we want to run, we exit the shell.
 
-```
+```text
 meterpreter > shell
 Procdess 39630 created.
 Channel 2 created.
@@ -57,7 +57,7 @@ Below we load the powershell extension, then drop into a shell using the new
 LanguageMode now shows that we are in FullLanguage mode and can now load tools
 that require this mode for operation.
 
-```
+```text
 meterpreter > load powershell
 Loading extension powershell...Success.
 meterpreter > powershell_shell

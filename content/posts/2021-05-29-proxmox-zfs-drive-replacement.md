@@ -24,7 +24,7 @@ When I built my ZFS array, best practice was to use the `/dev/disk/by-id/ata*`
 prefix for assigning drives to the array. As `/dev/sdX` names will also be
 referenced on occasion throughout this post, a reference mapping them is below.
 
-```
+```text
 # Serial numbers masked out below
 # New disk
 /dev/sda = /dev/disk/by-id/ata-TOSHIBA_HDWD130_SERIAL1
