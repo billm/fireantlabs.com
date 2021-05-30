@@ -25,11 +25,20 @@ paginate     = 10
   enableSharingButtons = true
   defaultTheme = "dark"
 
-[taxonomies]
-    category = "blog"
-    tag      = "tags"
-    series   = "series"
+[permalinks]
+  posts = "/post/:year/:month/:title/"
+  # Hack to get /post/:year and /post/:year/:month to render content
+  year = "/post/:title/"
+  month = "/post/:title/"
 
+[taxonomies]
+  category = "categories"
+  tag      = "tags"
+  series   = "series"
+  post     = "posts"
+  # Hack to get /:year and /:year/:month to render content
+  year = "year"
+  month = "month"
 
 [languages]
   [languages.en]
