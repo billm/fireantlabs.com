@@ -1,17 +1,1 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on FireAnt Labs</title><link>http://firantlabs.com/posts/</link><description>Recent content in Posts on FireAnt Labs</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Wed, 12 Jun 2019 20:19:55 -0400</lastBuildDate><atom:link href="http://firantlabs.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World</title><link>http://firantlabs.com/posts/2019-06-12-hello-world/</link><pubDate>Wed, 12 Jun 2019 20:19:55 -0400</pubDate><guid>http://firantlabs.com/posts/2019-06-12-hello-world/</guid><description>&lt;p>A proper Hello World in shellcode.&lt;/p></description><content type="html"><![CDATA[<p>A proper Hello World in shellcode.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span> 
-<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>shellcode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xeb\x19\x59\x31\xc0\xb0\x04\x31\xdb\xb3\x01\x31\xd2\xb2</span><span style="color:#e6db74">&#34;</span>
-                  <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x0d\xcd\x80\x31\xc0\xb0\x01\x31\xdb\xb3\x05\xcd\x80\xe8</span><span style="color:#e6db74">&#34;</span>
-                  <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xe2\xff\xff\xff\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x72\x6c</span><span style="color:#e6db74">&#34;</span>
-                  <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x64\x21\x0a</span><span style="color:#e6db74">&#34;</span>;
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
-{
-  (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">void</span>(<span style="color:#f92672">*</span>)()) shellcode)();
-  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./hello 
-Hello World!
-</code></pre></div>]]></content></item></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on FireAnt Labs</title><link>http://firantlabs.com/posts/</link><description>Recent content in Posts on FireAnt Labs</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><atom:link href="http://firantlabs.com/posts/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
