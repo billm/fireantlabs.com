@@ -27,12 +27,12 @@ it&rsquo;s root partition. This post is as much to ensure the notes I took to re
 from the degraded volume are easy for me to find as to share the steps to
 hopefully make someone elses life easier in the future.</p><p>When I built my ZFS array, best practice was to use the <code>/dev/disk/by-id/ata*</code>
 prefix for assigning drives to the array. As <code>/dev/sdX</code> names will also be
-referenced on occasion throughout this post, a reference mapping them is below.</p><pre><code># Serial numbers masked out below
+referenced on occasion throughout this post, a reference mapping them is below.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text># Serial numbers masked out below
 # New disk
 /dev/sda = /dev/disk/by-id/ata-TOSHIBA_HDWD130_SERIAL1
 # Existing good disk
 /dev/sdb = /dev/disk/by-id/ata-TOSHIBA_HDWD130_SERIAL2
-</code></pre><p>To prepare the replacement disk we can use <code>sgdisk</code> and <code>pve-efiboot-tool</code> to copy known good
+</code></pre></div><p>To prepare the replacement disk we can use <code>sgdisk</code> and <code>pve-efiboot-tool</code> to copy known good
 partition tables and properly initialize the drive.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Backup the partition table from an identical good disk</span>
 sgdisk --backup<span style=color:#f92672>=</span>table /dev/disk/by-id/ata-TOSHIBA_HDWD130_SERIAL2  
 <span style=color:#75715e># Restore the partition table on to the replacement disk</span>
