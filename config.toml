@@ -1,4 +1,4 @@
-baseURL = "http://firantlabs.com/"
+baseURL = "https://fireantlabs.com/"
 languageCode = "en-us"
 title = "FireAnt Labs"
 theme        = "hello-friend-ng"
